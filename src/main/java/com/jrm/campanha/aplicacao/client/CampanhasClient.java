@@ -11,12 +11,22 @@ import org.springframework.web.client.RestTemplate;
 import com.jrm.campanha.aplicacao.client.domain.Campanha;
 
 public class CampanhasClient {
+	
+	private RestTemplate restTemplate;
+	
+	private String URI_BASE;
+	
+	private String URN_BASE = "/campanhas";
+	
+	public CampanhasClient(String url) {
+		restTemplate = new RestTemplate();
+		
+		URI_BASE = url.concat(URN_BASE);
+	}
 
 	public List<Campanha> listar() {
-		RestTemplate restTemplate = new RestTemplate();
-
 		RequestEntity<Void> request = RequestEntity
-				.get(URI.create("http://localhost:8080/campanhas")).build();
+				.get(URI.create(URI_BASE)).build();
 
 		ResponseEntity<Campanha[]> response = restTemplate.exchange(request, Campanha[].class);
 		
@@ -24,14 +34,21 @@ public class CampanhasClient {
 	}
 	
 	public String salvar(Campanha campanha) {
-		RestTemplate restTemplate = new RestTemplate();
-		
 		RequestEntity<Campanha> request = RequestEntity
-				.post(URI.create("http://localhost:8080/campanhas"))
+				.post(URI.create(URI_BASE))
 				.body(campanha);
 		
 		ResponseEntity<Void> response = restTemplate.exchange(request, Void.class);
 		
 		return response.getHeaders().getLocation().toString();
+	}
+	
+	public Campanha buscar(String uri) {
+		RequestEntity<Void> request = RequestEntity
+				.get(URI.create(uri)).build();
+		
+		ResponseEntity<Campanha> response = restTemplate.exchange(request, Campanha.class);
+		
+		return response.getBody();
 	}
 }

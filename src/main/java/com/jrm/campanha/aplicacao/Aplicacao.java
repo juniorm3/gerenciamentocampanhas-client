@@ -13,7 +13,7 @@ public class Aplicacao {
 
 	public static void main(String[] args) throws ParseException {
 		
-		CampanhasClient campanhasClient = new CampanhasClient();
+		CampanhasClient campanhasClient = new CampanhasClient("http://localhost:8080");
 		TimesClient timesClient = new TimesClient();
 		
 		List<Campanha> listaCampanhas = campanhasClient.listar();
@@ -23,7 +23,7 @@ public class Aplicacao {
 		}
 		
 		Campanha campanha = new Campanha();
-		campanha.setNome("Campeonato Brasileiro");
+		campanha.setNome("Campeonato Paualista");
 		
 		SimpleDateFormat vigencia = new SimpleDateFormat("dd/MM/yyyy");
 		campanha.setInicioVigencia(vigencia.parse("15/01/2018"));
@@ -38,5 +38,9 @@ public class Aplicacao {
 		String localizacao = campanhasClient.salvar(campanha);
 		
 		System.out.println("URI da camapanha salva: " + localizacao);
+		
+		Campanha campanhaBuscada = campanhasClient.buscar(localizacao);
+		
+		System.out.println("Campanha buscada: " + campanhaBuscada.getNome());
 	}
 }

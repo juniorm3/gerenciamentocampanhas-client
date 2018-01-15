@@ -1,4 +1,4 @@
-package com.jrm.campanha.aplicacao;
+package com.jrm.campanha.aplicacao.client.domain;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.jrm.campanha.aplicacao;
+package com.jrm.campanha.aplicacao.client.domain;
 
 public class DetalhesErro {
 
